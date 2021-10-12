@@ -1,3 +1,25 @@
+#!/usr/bin/env python
+
+# https://stackoverflow.com/questions/56905592
+# Automatic contrast and brightness adjustment of a color photo of a sheet of paper with OpenCV
+
+import sys
+
+if len(sys.argv) != 3:
+  print(f"usage: {sys.argv[0]} inputPath outputPath")
+  sys.exit(1)
+
+inputPath = sys.argv[1]
+outputPath = sys.argv[2]
+
+import cv2
+import numpy as np
+
+def main():
+    inputImage = cv2.imread(inputPath)
+    outputImage = process_image(adjust_gamma(inputImage))
+    cv2.imwrite(outputPath, outputImage)
+
 # FalconUA
 # https://stackoverflow.com/a/57103789/10440128
 
@@ -157,3 +179,7 @@ def combine_process(img, mask):
     image_out = combine_block_image_process(image_in, mask, 20)
     image_out = combine_postprocess(image_out)
     return image_out
+
+
+
+main()

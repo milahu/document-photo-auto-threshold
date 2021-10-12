@@ -1,7 +1,23 @@
+#!/usr/bin/env python
+
+# https://stackoverflow.com/questions/56905592
+# Automatic contrast and brightness adjustment of a color photo of a sheet of paper with OpenCV
+
+import sys
+
+if len(sys.argv) != 3:
+  print(f"usage: {sys.argv[0]} inputPath outputPath")
+  sys.exit(1)
+
+inputPath = sys.argv[1]
+outputPath = sys.argv[2]
+
 # Stef
 # https://stackoverflow.com/a/57116646/10440128
 
-image = cv2.imread('mY7ep.jpg')
+import cv2, numpy as np
+
+image = cv2.imread(inputPath)
 
 # make mask and inverted mask for colored areas
 b,g,r = cv2.split(cv2.blur(image,(5,5)))
@@ -19,3 +35,7 @@ bg = cv2.bitwise_and(text, text, mask = mask_inv)
 fg = cv2.bitwise_and(image, image, mask = mask)
 
 out = cv2.add(cv2.cvtColor(bg, cv2.COLOR_GRAY2BGR), fg)
+
+
+
+cv2.imwrite(outputPath, out)

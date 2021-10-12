@@ -1,3 +1,17 @@
+#!/usr/bin/env python
+
+# https://stackoverflow.com/questions/56905592
+# Automatic contrast and brightness adjustment of a color photo of a sheet of paper with OpenCV
+
+import sys
+
+if len(sys.argv) != 3:
+  print(f"usage: {sys.argv[0]} inputPath outputPath")
+  sys.exit(1)
+
+inputPath = sys.argv[1]
+outputPath = sys.argv[2]
+
 # nathancy
 # https://stackoverflow.com/a/56909036/10440128
 
@@ -52,9 +66,13 @@ def automatic_brightness_and_contrast(image, clip_hist_percent=1):
     auto_result = cv2.convertScaleAbs(image, alpha=alpha, beta=beta)
     return (auto_result, alpha, beta)
 
-image = cv2.imread('1.jpg')
+image = cv2.imread(inputPath)
 auto_result, alpha, beta = automatic_brightness_and_contrast(image)
 print('alpha', alpha)
 print('beta', beta)
-cv2.imshow('auto_result', auto_result)
-cv2.waitKey()
+#cv2.imshow('auto_result', auto_result)
+#cv2.waitKey()
+
+
+
+cv2.imwrite(outputPath, auto_result)
